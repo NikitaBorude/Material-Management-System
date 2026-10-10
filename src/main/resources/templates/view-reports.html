@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Reports</title>
+</head>
+<body>
+	
+	<style>
+			body {
+			            font-family: Arial, sans-serif;
+			            background: linear-gradient(to right, rgb(255, 255, 255), #764ba2);
+			            margin: 0;
+			            padding: 0;
+			        }
+
+
+			/* NAVBAR */
+			.navbar {
+			    background: #2c3e50;
+			    padding: 15px 30px;
+			    display: flex;
+			    justify-content: center;
+			}
+
+			.navbar a {
+			    color: white;
+			    text-decoration: none;
+			    margin: 0 15px;
+			    font-weight: 600;
+			    transition: 0.3s;
+			}
+
+			.navbar a:hover {
+			    color: #ffd369;
+			}
+
+		
+
+			/* HEADINGS */
+			h2 {
+			    text-align: center;
+			    color: #333;
+			    margin-bottom: 25px;
+			}
+
+			
+			/* TABLE */
+			table {
+			    width: 100%;
+			    border-collapse: collapse;
+			    margin-top: 20px;
+			}
+
+			th {
+			    background: rgb(64, 0, 128);
+			    color: white;
+			    padding: 12px;
+			}
+
+			td {
+			    padding: 10px;
+			    border-bottom: 1px solid rgb(0, 0, 0);
+			    text-align: center;
+			}
+
+			tr:hover {
+			    background-color: #f2f2f2;
+			}
+			
+			/*button */
+			.action-btn {
+			    padding: 6px 12px;
+			    border-radius: 5px;
+			    text-decoration: none;
+			    color: rgb(255, 255, 255);
+			    font-size: 14px;
+			    margin: 0 3px;
+			    display: inline-block;
+			}
+			
+	        
+			.resolve-btn {
+			    background-color: rgb(0, 0, 0);
+			}
+
+			.resolve-btn:hover {
+			    background-color: rgb(255, 255, 255);
+			}
+
+			
+		</style>
+
+<h2>Customer Reports</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Product</th>
+        <th>Issue</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="r : ${reports}">
+        <td th:text="${r.id}"></td>
+        <td th:text="${r.customerName}"></td>
+        <td th:text="${r.productName}"></td>
+        <td th:text="${r.issueType}"></td>
+        <td th:text="${r.status}"></td>
+        <td>
+            <a th:href="@{/reports/resolve/{id}(id=${r.id})}"
+				class="action-btn resolve-btn">
+							         Resolve</a>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

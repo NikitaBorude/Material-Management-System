@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Purchase</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, rgb(255, 255, 255), #764ba2);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: linear-gradient(to right, rgb(0, 0, 0), #764ba2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #434190;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Edit Purchase</h2>
+
+    <form th:action="@{/purchase/update}" th:object="${purchase}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <label>Product:</label>
+        <select th:field="*{product.id}">
+            <option th:each="p : ${products}"
+                    th:value="${p.id}"
+                    th:text="${p.name}">
+            </option>
+        </select>
+
+        <label>Supplier:</label>
+        <select th:field="*{supplier.id}">
+            <option th:each="s : ${suppliers}"
+                    th:value="${s.id}"
+                    th:text="${s.name}">
+            </option>
+        </select>
+
+        <label>Quantity:</label>
+        <input type="number" th:field="*{quantity}" />
+
+        <label>Purchase Date:</label>
+        <input type="date" th:field="*{purchaseDate}" />
+
+        <button type="submit">Update Purchase</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

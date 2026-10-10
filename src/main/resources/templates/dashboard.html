@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MMS Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            background: linear-gradient(135deg,rgb(0, 0, 0),#8e2de2);
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar{
+            width:230px;
+            background: #2c3e50;
+            backdrop-filter: blur(10px);
+            padding:30px 20px;
+            color:white;
+            position:fixed;
+            height:100vh;
+        }
+
+        .sidebar h2{
+            margin-bottom:40px;
+            font-weight:600;
+            font-size:20px;
+        }
+
+        .sidebar a{
+            display:block;
+            padding:10px 12px;
+            color:white;
+            text-decoration:none;
+            margin-bottom:8px;
+            border-radius:6px;
+            font-size:14px;
+            transition:0.3s;
+        }
+
+        .sidebar a:hover{
+            background:rgba(255,255,255,0.2);
+        }
+
+        /* MAIN */
+        .main{
+            margin-left:230px;
+            padding:40px;
+            width:100%;
+        }
+
+        .main h1{
+            color:white;
+            margin-bottom:30px;
+            font-weight:600;
+        }
+
+        /* WHITE CONTAINER */
+        .dashboard-container{
+            background:white;
+            border-radius:16px;
+            padding:35px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* CARDS */
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:20px;
+            margin-bottom:30px;
+        }
+
+        .card{
+            background:#f8fafc;
+            padding:25px;
+            border-radius:12px;
+            text-align:center;
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h3{
+            font-size:14px;
+            color:#64748b;
+            margin-bottom:10px;
+        }
+
+        .card p{
+            font-size:26px;
+            font-weight:600;
+            color:#6a11cb;
+        }
+
+        /* LOW STOCK */
+        .low-stock{
+            background:#fff7f7;
+            padding:18px;
+            border-left:4px solid #e11d48;
+            border-radius:8px;
+            margin-bottom:30px;
+        }
+
+        .low-stock h3{
+            font-size:15px;
+            color:#e11d48;
+            margin-bottom:8px;
+        }
+
+        /* CHART */
+        .chart-section{
+            margin-top:20px;
+        }
+
+        .chart-section h2{
+            font-size:18px;
+            margin-bottom:20px;
+            color:#334155;
+        }
+
+        .chart-box{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            height:200px;
+        }
+
+        .bar{
+            width:12%;
+            background: linear-gradient(to top,#6a11cb,#8e2de2);
+            border-radius:6px;
+            transition:0.3s;
+        }
+
+        .bar:hover{
+            opacity:0.8;
+        }
+
+        @media(max-width:1000px){
+            .cards{
+                grid-template-columns:repeat(2,1fr);
+            }
+        }
+
+        @media(max-width:600px){
+            .cards{
+                grid-template-columns:1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Material System</h2>
+
+      <a href="/dashboard">🏠 Dashboard</a>
+	  <a href="/product/add">📦 Add Product</a> 
+	  <a href="/product/view">📋 View Products</a>
+	  <a href="/supplier/add">👤 Add Supplier</a> 
+	  <a href="/supplier/view">📑 View Suppliers</a> 
+	  <a href="/purchase/add">🛒 Add Purchase</a> 
+	  <a href="/purchase/view">📑 View Purchases</a> 
+	  <a href="/billing">💰 Sales</a> 
+	  <a href="/view-sales">📑 View Sales</a> 
+	  <a href="/reports/add"> 📊 Add Report</a>
+	  <a href="/reports/view">📑 View Reports</a>
+	  <form th:action="@{/logout}" method="post" style="display:inline;">
+	      <button type="submit" style="
+	          background:none;
+	          border:none;
+	          color:white;
+	          padding:10px 12px;
+	          width:100%;
+	          text-align:left;
+	          cursor:pointer;
+	          font-size:14px;">
+	          🚪 Logout
+	      </button>
+	  </form>
+</div>
+
+<div class="main">
+
+    <h1>Dashboard Overview</h1>
+
+    <div class="dashboard-container">
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total Products</h3>
+                <p th:text="${totalProducts}"></p>
+            </div>
+
+            <div class="card">
+                <h3>Total Stock</h3>
+                <p th:text="${totalStock}"></p>
+            </div>
+
+            <div class="card">
+                <h3>Total Purchases</h3>
+                <p th:text="${totalPurchases}"></p>
+            </div>
+
+            <div class="card">
+                <h3>Total Sales</h3>
+                <p th:text="${totalSales}"></p>
+            </div>
+        </div>
+
+        <div th:if="${lowStockCount > 0}" class="low-stock">
+            <h3>Low Stock Products: <span th:text="${lowStockCount}"></span></h3>
+            <ul>
+                <li th:each="p : ${lowStockProducts}">
+                    <span th:text="${p.name}"></span>
+                    (Qty: <span th:text="${p.quantity}"></span>)
+                </li>
+            </ul>
+        </div>
+
+        <div class="chart-section">
+            <h2>Sales Overview</h2>
+            <div class="chart-box">
+                <div class="bar" style="height:60%"></div>
+                <div class="bar" style="height:80%"></div>
+                <div class="bar" style="height:40%"></div>
+                <div class="bar" style="height:90%"></div>
+                <div class="bar" style="height:70%"></div>
+                <div class="bar" style="height:50%"></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

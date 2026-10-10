@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login | Material Management System</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        *{ 
+			margin:0; 
+			padding:0; 
+			box-sizing:border-box; 
+			font-family:'Segoe UI', sans-serif; 
+		}
+
+       body{ 
+		     height:100vh;
+		     display:flex;
+		     justify-content:center;
+		     align-items:center;
+	         color:white;
+             overflow:hidden;
+
+	        background: linear-gradient(-45deg, rgb(0, 0, 0), #764ba2, #6a11cb, rgb(64, 0, 128));
+            background-size:400% 400%;
+		}
+		
+		/* Top Branding */
+		        .top-bar{
+		            position:absolute;
+		            top:20px;
+		            left:40px;
+		            font-weight:bold;
+		            font-size:18px;
+		            opacity:0.9;
+		        }
+
+		        .hero{
+		            text-align:center;
+		            z-index:2;
+		        }
+				
+		/* Background Watermark */ 
+				.bg-logo{ position:absolute; 
+				          font-size:350px; 
+						  font-weight:900; 
+						  color:white; 
+						  opacity:0.04; 
+						  letter-spacing:30px; 
+						  pointer-events:none; 
+					   }
+					   
+              /*login box*/
+       .login-card{ 
+		        width:380px; 
+				padding:40px; 
+				border-radius:20px; 
+				backdrop-filter: blur(15px); 
+				background: rgba(255,255,255,0.15); 
+				box-shadow:0 20px 40px rgba(0,0,0,0.2); 
+				text-align:center; 
+				color:rgb(0, 0, 0); 
+				position:relative; 
+				z-index:2; 
+			}
+
+		
+			   
+       .login-card h2{ 
+		          margin-bottom:10px; 
+				  font-size:28px; 
+			  } 
+			  
+			  .login-card p{
+				 margin-bottom:25px; 
+				 font-size:14px; 
+				 opacity:0.8;
+			  }
+
+			  /*input-group*/
+        .input-group{
+            position:relative;
+            margin-bottom:15px;
+        }
+
+        .input-group i{
+            position:absolute;
+            left:15px;
+            top:50%;
+            transform:translateY(-50%);
+        }
+
+		.input-group input{
+		    width:100%;
+		    padding:12px 40px;
+		    border:none;
+		    border-radius:10px;
+		    outline:none;
+		    background:white;
+		    color:black;   /* 👈 YEH CHANGE IMPORTANT */
+		    font-size:14px;
+		}
+
+		/* placeholder color */
+		.input-group input::placeholder{
+		    color:#888;
+		}
+
+		/* focus effect */
+		.input-group input:focus{
+		    box-shadow:0 0 8px rgba(0,0,0,0.3);
+		}
+
+        .btn{ 
+			width:100%; 
+			padding:12px; 
+			border:none; 
+			border-radius:10px; 
+			background:linear-gradient(45deg,#00f2fe,#4facfe); 
+			font-weight:bold; 
+			font-size:16px; 
+			cursor:pointer; 
+			transition:0.3s; 
+		} 
+		.btn:hover{ 
+			transform:scale(1.05); 
+			box-shadow:0 10px 20px rgba(0,0,0,0.3); 
+		}
+
+        .switch-text{
+            margin-top:15px;
+            font-size:13px;
+            cursor:pointer;
+            color:#fff;
+            text-decoration:underline;
+        }
+
+        .hidden{
+            display:none;
+        }
+		/* Background Light Icons */
+		       .bg-icon{
+		           position:absolute;
+		           font-size:200px;
+		           opacity:0.05;
+		           color:white;
+		       }
+
+		       .icon1{ top:10%; left:10%; }
+		       .icon2{ bottom:15%; right:15%; }
+		       .icon3{ top:50%; left:80%; }
+
+    </style>
+</head>
+
+<body>
+	<!-- Top Branding -->
+	   <div class="top-bar">
+	       📦 Material Management System
+	   </div>
+	   
+	<!-- Background Icons -->
+	    <i class="fas fa-box bg-icon icon1"></i>
+	    <i class="fas fa-warehouse bg-icon icon2"></i>
+	    <i class="fas fa-chart-line bg-icon icon3"></i>
+		
+	<!-- Watermark --> 
+	<div class="bg-logo">MMS</div>
+
+<div class="login-card">
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+        <h2><i class="fas fa-lock"></i> Login</h2>
+		<p>Material Management System</p>
+
+        <div th:if="${param.error}" style="color:red;margin-bottom:10px;">
+            Invalid Username or Password
+        </div>
+
+        
+			<form th:action="@{/login}" method="post" onsubmit="showLoader()" autocomplete="off">
+
+			    <div class="input-group">
+			        <i class="fas fa-user"></i>
+			        <input type="text"
+			               name="username"
+			               placeholder="Enter Username"
+			               autocomplete="off"
+			               required>
+			    </div>
+
+			    <div class="input-group">
+			        <i class="fas fa-lock"></i>
+			        <input type="password"
+			               name="password"
+			               placeholder="Enter Password"
+			               autocomplete="new-password"
+			               required>
+			    </div>
+
+            <button type="submit" class="btn">  <i class="fas fa-sign-in-alt"></i>Login</button>
+        </form>
+		<div class="footer"> © 2026 Material Management System </div>
+
+        <div class="switch-text" onclick="showRegister()">
+            Don't have an account? Register
+        </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" class="hidden">
+        <h2><i class="fas fa-user-plus"></i> Register</h2>
+
+        <form th:action="@{/register}" method="post"  onsubmit="showLoader()" autocomplete="off">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="New Username" autocomplete="off" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="New Password" autocomplete="off" required>
+            </div>
+
+            <button type="submit" class="btn">   <i class="fas fa-sign-in-alt"></i> Register</button>
+        </form>
+
+        <div class="switch-text" onclick="showLogin()">
+            Already have an account? Login
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showRegister(){
+        document.getElementById("loginForm").classList.add("hidden");
+        document.getElementById("registerForm").classList.remove("hidden");
+    }
+
+    function showLogin(){
+        document.getElementById("registerForm").classList.add("hidden");
+        document.getElementById("loginForm").classList.remove("hidden");
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Material Management System</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+		
+		.big-logo{
+		    position:absolute;
+		    top:50%;
+		    left:50%;
+		    transform:translate(-50%, -50%);
+		    font-size:300px;
+		    font-weight:900;
+		    opacity:0.04;
+		    color:white;
+		    letter-spacing:25px;
+		    z-index:0;
+		    pointer-events:none;
+		}
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            overflow:hidden;
+                        /*linear gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);*/
+            background: linear-gradient(-45deg, #667eea, #764ba2, #6a11cb, rgb(64, 0, 128));
+            background-size:400% 400%;
+           /* animation: gradient 10s ease infinite;*/
+        }
+
+        @keyframes gradient {
+            0% { background-position:0% 50%; }
+            50% { background-position:100% 50%; }
+            100% { background-position:0% 50%; }
+        }
+
+        /* Top Branding */
+        .top-bar{
+            position:absolute;
+            top:20px;
+            left:40px;
+            font-weight:bold;
+            font-size:18px;
+            opacity:0.9;
+        }
+
+        .hero{
+            text-align:center;
+            z-index:2;
+        }
+
+        .welcome-text{
+            font-weight:400;
+            font-size:22px;
+            margin-bottom:15px;
+            opacity:0.9;
+            letter-spacing:1px;
+        }
+
+        h1{
+            font-size:55px;
+            margin-bottom:20px;
+        }
+
+        p{
+            font-size:20px;
+            margin-bottom:25px;
+            opacity:0.9;
+        }
+
+        .features{
+            margin-bottom:30px;
+        }
+
+        .features span{
+            margin:0 10px;
+            padding:8px 18px;
+            background:rgba(255,255,255,0.15);
+            border-radius:20px;
+            font-size:14px;
+        }
+
+        .btn{
+            padding:15px 40px;
+            border:none;
+            border-radius:30px;
+            font-size:18px;
+            cursor:pointer;
+            background:#00f2fe;
+            color:black;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn i{
+            margin-right:8px;
+        }
+
+        .btn:hover{
+            transform:scale(1.1);
+            box-shadow:0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Background Light Icons */
+        .bg-icon{
+            position:absolute;
+            font-size:200px;
+            opacity:0.05;
+            color:white;
+        }
+
+        .icon1{ top:10%; left:10%; }
+        .icon2{ bottom:15%; right:15%; }
+        .icon3{ top:50%; left:80%; }
+
+        /* Scroll Animation */
+        .scroll-down{
+            position:absolute;
+            bottom:20px;
+            font-size:25px;
+            animation: bounce 2s infinite;
+            opacity:0.6;
+        }
+
+        @keyframes bounce{
+            0%,100%{ transform:translateY(0);}
+            50%{ transform:translateY(10px);}
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Branding -->
+    <div class="top-bar">
+        📦 Material Management System
+    </div>
+
+    <!-- Background Icons -->
+    <i class="fas fa-box bg-icon icon1"></i>
+    <i class="fas fa-warehouse bg-icon icon2"></i>
+    <i class="fas fa-chart-line bg-icon icon3"></i>
+
+    <!-- Main Hero Section -->
+    <div class="hero">
+
+        <h3 class="welcome-text">👋 Welcome To Your Inventory Portal</h3>
+
+        <h1>Material Management System</h1>
+
+        <p>Manage Products, Inventory, Sales & Purchases Easily</p>
+
+        <div class="features">
+            <span>📦 Inventory</span>
+            <span>📊 Reports</span>
+            <span>🛒 Sales</span>
+            <span>🏭 Suppliers</span>
+        </div>
+
+        <button class="btn" onclick="location.href='/login'">
+            <i class="fas fa-sign-in-alt"></i> Go To Login
+        </button>
+
+		<div class="big-logo">MMS</div>
+		
+    </div>
+
+    <!-- Scroll Animation -->
+    <div class="scroll-down">↓</div>
+
+</body>
+</html>

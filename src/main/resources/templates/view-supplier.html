@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Supplier</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ffffff, #764ba2);
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+		table {
+		    width: 100%;
+		    border-collapse: collapse;
+		    margin-top: 20px;
+		    background: white;
+		}
+
+		th, td {
+		    border: 1px solid #000;   /* 🔥 Ye line add karo */
+		    padding: 12px;
+		    text-align: center;
+		}
+
+		th {
+		    background: rgb(64, 0, 128);
+		    color: white;
+		}
+
+		tr:hover {
+		    background-color: #f2f2f2;
+		}
+				
+
+        .badge-active {
+            color: green;
+            font-weight: bold;
+        }
+
+        .badge-deactive {
+            color: red;
+            font-weight: bold;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 2px;
+            display: inline-block;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #3498db;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+
+        .toggle-btn {
+            background-color: #27ae60;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/dashboard">Home</a>
+    <a href="/product/add">Add Product</a>
+    <a href="/product/view">View Products</a>
+    <a href="/supplier/add">Add Supplier</a>
+    <a href="/supplier/view">View Supplier</a>
+    <a href="/purchase/add">Add Purchase</a>
+    <a href="/purchase/view">View Purchase</a>
+    <a href="/billing">Sale</a>
+</div>
+
+<h2>Supplier List</h2>
+
+<table>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+
+<tr th:each="s : ${list}">
+    <td th:text="${s.id}"></td>
+    <td th:text="${s.name}"></td>
+    <td th:text="${s.phone}"></td>
+    <td th:text="${s.email}"></td>
+    <td th:text="${s.address}"></td>
+
+    <!-- STATUS -->
+    <td>
+        <span th:if="${s.active}" style="color:green;font-weight:bold;">
+            Active
+        </span>
+        <span th:if="${!s.active}" style="color:red;font-weight:bold;">
+            Deactive
+        </span>
+    </td>
+
+    <!-- ACTION -->
+    <td>
+        <a th:href="@{'/supplier/edit/' + ${s.id}}"
+           class="action-btn edit-btn">
+            Edit
+        </a>
+
+        <a th:href="@{'/supplier/delete/' + ${s.id}}"
+           class="action-btn delete-btn"
+           onclick="return confirm('Are you sure you want to delete this supplier?')">
+            Delete
+        </a>
+
+        <a th:href="@{'/supplier/toggle/' + ${s.id}}">
+            <button type="button">Toggle</button>
+        </a>
+    </td>
+</tr>
+
+</table>
+
+</body>
+</html>

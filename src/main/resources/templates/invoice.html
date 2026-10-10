@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .header p {
+            margin: 3px;
+            font-size: 14px;
+        }
+
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .amount-section {
+            margin-top: 20px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #1a242f;
+        }
+
+        @media print {
+            button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Material Management System</h1>
+    <p>NRT MART </p>
+    <p>Pune, Maharashtra</p>
+</div>
+
+<hr>
+
+<h2>Invoice</h2>
+
+<p><strong>Invoice No:</strong>
+   <span th:text="${sale.invoiceNumber}"></span>
+</p>
+
+<p><strong>Customer Name:</strong>
+   <span th:text="${sale.customerName}"></span>
+</p>
+
+<p><strong>Date:</strong>
+   <span th:text="${sale.saleDate}"></span>
+</p>
+
+<p><strong>Payment Mode:</strong>
+   <span th:text="${sale.paymentMode}"></span>
+</p>
+
+<hr>
+
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price (₹)</th>
+        <th>Subtotal (₹)</th>
+    </tr>
+
+    <tr th:each="item : ${sale.items}">
+        <td th:text="${item.product.name}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.subtotal}"></td>
+    </tr>
+</table>
+
+<div class="amount-section">
+
+    <p>Subtotal: ₹ <span th:text="${sale.subtotal}"></span></p>
+
+    <p>GST (18%): ₹ <span th:text="${sale.gstAmount}"></span></p>
+
+    <p class="total">
+        Total: ₹ <span th:text="${sale.totalAmount}"></span>
+    </p>
+
+</div>
+
+<button onclick="window.print()">Print Invoice</button>
+
+<hr>
+<p style="text-align:center;">Thank you for shopping with us 😊</p>
+
+</body>
+</html>
